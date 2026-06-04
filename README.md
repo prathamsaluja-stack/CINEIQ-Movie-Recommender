@@ -5,6 +5,11 @@ An open, explainable movie recommendation engine that combines collaborative fil
 ## Problem Statement
 Content discovery on modern streaming platforms is opaque, biased toward promoted titles, and can trap users in recommendation loops. **CINEIQ** aims to provide an open and explainable system that blends multiple ML strategies for better, more transparent recommendations.
 
+## Team Members
+Preyash Pratyush
+Pratham Saluja
+Shlok Pratap Singh
+
 ## Deliverables
 - **Hybrid Recommendation Engine**: Collaborative filtering + content-based filtering (TF‑IDF + cosine similarity) + SVD-based matrix factorization via weighted ensemble
 - **Sentiment-Aware Re‑Ranker**: Uses VADER on user reviews to re-rank recommendations
