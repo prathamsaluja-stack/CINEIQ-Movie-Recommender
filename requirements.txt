@@ -10,3 +10,4 @@ python-dotenv
 nltk
 plotly
 mlflow
+gdown

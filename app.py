@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import plotly.graph_objects as go
 import plotly.express as px
+import subprocess
 
 load_dotenv()
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
@@ -20,6 +21,10 @@ st.markdown("""
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MOVIE_LIST_PATH = os.path.join(BASE_DIR, 'models', 'movie_list.pkl')
+
+if not os.path.exists(MOVIE_LIST_PATH):
+    print("Models not found. Downloading...")
+    subprocess.run(["python", os.path.join(BASE_DIR, "download_models.py")], check=True)
 
 def fetch_poster(tmdb_id):
     url = f"https://api.themoviedb.org/3/movie/{tmdb_id}?api_key={TMDB_API_KEY}&language=en-US"
@@ -58,7 +63,8 @@ selected_movie = st.selectbox(
 
 if st.button('Recommend Movies'):
 
-    backend_url = f"http://127.0.0.1:8000/recommend"
+    base_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+    backend_url = f"{base_url}/recommend"
     params = {"user_id": user_id, "movie_title": selected_movie}
     
     with st.spinner('Finding Recommendations...'):
@@ -92,7 +98,8 @@ if show_dashboard:
     st.header(f"User {user_id} Taste Profile")
     
     try:
-        stats_res = requests.get(f"http://127.0.0.1:8000/user_stats/{user_id}")
+        base_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+        stats_res = requests.get(f"{base_url}/user_stats/{user_id}")
         if stats_res.status_code == 200:
             stats = stats_res.json()
             
